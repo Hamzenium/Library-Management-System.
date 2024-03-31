@@ -26,6 +26,9 @@ app.use('/api', searchRouter);
 app.use('/api', biddingItem);
 app.use('/api', paymentItem);
 
+
+app.options('*', cors());
+
 app.listen(process.env.PORT || 3000, function(){
   console.log("Express server listening on http://localhost:3000 in mode", this.address().port, app.settings.env);
 });
