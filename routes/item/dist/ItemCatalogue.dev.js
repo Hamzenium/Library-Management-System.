@@ -4,7 +4,7 @@ var express = require('express');
 
 var router = express.Router();
 router.post('/items/:userId', function _callee(req, res) {
-  var userID, _req$body, title, description, startingPrice, images, category, condition, otherDetails, itemRef, itemObject;
+  var userID, _req$body, title, description, startingPrice, images, category, condition, otherDetails, endDate, itemRef, itemObject;
 
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
@@ -24,7 +24,9 @@ router.post('/items/:userId', function _callee(req, res) {
 
         case 4:
           _context.prev = 4;
-          _context.next = 7;
+          endDate = new Date();
+          endDate.setDate(endDate.getDate() + 10);
+          _context.next = 9;
           return regeneratorRuntime.awrap(req.app.locals.admin.firestore().collection('items').add({
             title: title,
             description: description,
@@ -37,51 +39,51 @@ router.post('/items/:userId', function _callee(req, res) {
             condition: condition,
             auctionStatus: 'open',
             startTime: req.app.locals.admin.firestore.FieldValue.serverTimestamp(),
-            endTime: null,
+            endTime: endDate,
             winningBidderId: null,
             currentBidder: null,
             otherDetails: otherDetails
           }));
 
-        case 7:
+        case 9:
           itemRef = _context.sent;
-          _context.next = 10;
+          _context.next = 12;
           return regeneratorRuntime.awrap(updateSearchIndex(itemRef.id, title, description, req.app.locals.admin));
 
-        case 10:
+        case 12:
           // Construct the JSON object
           itemObject = {
             itemRef: itemRef.id,
             title: title,
             description: description
           };
-          _context.next = 13;
+          _context.next = 15;
           return regeneratorRuntime.awrap(req.app.locals.admin.firestore().collection('users').doc(userID).update({
             items: req.app.locals.admin.firestore.FieldValue.arrayUnion(itemObject)
           }));
 
-        case 13:
+        case 15:
           res.status(201).json({
             message: 'Item created successfully',
             itemId: itemRef.id
           });
-          _context.next = 20;
+          _context.next = 22;
           break;
 
-        case 16:
-          _context.prev = 16;
+        case 18:
+          _context.prev = 18;
           _context.t0 = _context["catch"](4);
           console.error('Error creating item:', _context.t0);
           res.status(500).json({
             error: 'Internal server error'
           });
 
-        case 20:
+        case 22:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[4, 16]]);
+  }, null, null, [[4, 18]]);
 }); //   retrieve the item's dashboard containing all the details of the auction item
 
 router.get('/items/:itemId', function _callee2(req, res) {

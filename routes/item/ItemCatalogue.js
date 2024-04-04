@@ -11,6 +11,8 @@ router.post('/items/:userId', async (req, res) => {
   }
 
   try {
+    const endDate = new Date();
+    endDate. setDate (endDate. getDate () + 10) ;
       const itemRef = await req.app.locals.admin.firestore().collection('items').add({
           title: title,
           description: description,
@@ -23,7 +25,7 @@ router.post('/items/:userId', async (req, res) => {
           condition: condition,
           auctionStatus: 'open',
           startTime: req.app.locals.admin.firestore.FieldValue.serverTimestamp(),
-          endTime: null,
+          endTime: endDate,
           winningBidderId: null,
           currentBidder: null,
           otherDetails: otherDetails

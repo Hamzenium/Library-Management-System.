@@ -41,13 +41,13 @@ router.post('/enter/auction', function _callee(req, res) {
     }
   }, null, null, [[1, 8]]);
 });
-router.get('/auction/time/left', function _callee2(req, res) {
+router.get('/auction/time/left/:itemId', function _callee2(reg, res) {
   var item_id, itemRef, itemDoc, itemData, currentTime, endTime, timeDifference, timeLeft, daysLeft, hoursLeft, minutesLeft;
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          item_id = req.body.item_id;
+          item_id = req.params.itemId;
 
           if (item_id) {
             _context2.next = 3;
