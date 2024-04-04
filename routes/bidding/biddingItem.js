@@ -20,8 +20,8 @@ router.post('/enter/auction', async (req, res) => {
     }
 });
 
-router.get ('/auction/time/left/:itemId', async (reg, res) => {
-    const item_id = req.params. itemId;
+router.get('/auction/time/left/:itemId', async (req, res) => {
+    const item_id = req.params.itemId;
     if (!item_id) {
     throw new Error("Item id not sent");
     }
